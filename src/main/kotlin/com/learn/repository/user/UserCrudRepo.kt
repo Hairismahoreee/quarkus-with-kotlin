@@ -4,23 +4,18 @@ import com.learn.model.dto.body.UserBody
 import com.learn.model.dto.response.UserResponse
 import com.learn.model.entity.User
 import com.learn.service.utility.PanacheWithSoftDelete
-import io.quarkus.hibernate.orm.panache.kotlin.PanacheRepository
-import io.quarkus.hibernate.orm.panache.kotlin.PanacheRepositoryBase
 import jakarta.enterprise.context.ApplicationScoped
-import java.time.LocalDateTime
-import java.util.Objects
+import java.util.*
 
 @ApplicationScoped
-class UserCrudRepo: PanacheWithSoftDelete<User> {
+class UserCrudRepo: PanacheWithSoftDelete<User, UserResponse> {
 
     fun getAllUser(): List<UserResponse> {
-        val users = getAll()
-        return users.map { it.mapToRes() }
+        return getAll(UserResponse::class.java)
     }
 
     fun getTrashedUser(): List<UserResponse> {
-        val users = getTrashed()
-        return users.map { it.mapToRes() }
+        return getTrashed(UserResponse::class.java)
     }
 
     fun create(body: UserBody): UserResponse {

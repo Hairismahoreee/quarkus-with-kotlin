@@ -2,14 +2,12 @@ package com.learn.model.entity
 
 import com.learn.model.dto.response.UserResponse
 import com.learn.service.utility.PasswordHasher
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
+import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "users")
@@ -17,7 +15,7 @@ class User {
 
     @Id
     @Column(name = "user_id", length = 36)
-    var id: String = UUID.randomUUID().toString()
+    val id: String = UUID.randomUUID().toString()
 
     @Column(length = 50)
     var email: String? = null
@@ -46,6 +44,9 @@ class User {
 
     @Column(name = "deleted_at")
     var deletedAt: LocalDateTime? = null
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    var roles: Set<Role> = HashSet<Role>()
 
     //**** Map to response
     fun mapToRes(): UserResponse {

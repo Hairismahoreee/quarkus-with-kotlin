@@ -1,13 +1,15 @@
 package com.learn.model.dto.response
 
+import com.learn.model.entity.Role
 import io.quarkus.runtime.annotations.RegisterForReflection
 import java.time.LocalDateTime
 
-data class UserResponse(
-    val id: String,
-    val email: String? = null,
-    val username: String,
-    val createdAt: LocalDateTime? = null,
-    val updatedAt: LocalDateTime? = null,
-    val deletedAt: LocalDateTime? = null
+@RegisterForReflection
+data class UserResponse (
+    var id: String?,
+    var email: String?,
+    var username: String?,
+    var createdAt: LocalDateTime?,
+    var updatedAt: LocalDateTime?,
+    var deletedAt: LocalDateTime?
 )
